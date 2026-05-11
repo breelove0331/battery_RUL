@@ -1,2 +1,3 @@
 # battery_RUL
-Explainable Battery RUL Prediction using XGBoost and SHAP
+
+Explainable AI-based Battery Degradation Analysis and Relative RUL Prediction using XGBoost and SHAP.
