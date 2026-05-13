@@ -49,7 +49,7 @@ data_analysis/
 │   └── shap/          # SHAP 분석 상세 리포트
 ├── dashboard/         # React 기반 인터페이스 소스
 ├── ppt/               # 발표 자료 및 보고서 (pptx)
-└── main_model/        # [Legacy] 원본 스크립트 백업
+└── scratch/           # 개발 및 시각화 스크립트
 ```
 
 ## 🚀 실행 방법
