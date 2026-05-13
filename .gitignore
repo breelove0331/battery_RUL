@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+ENV/
+build/
+dist/
+*.egg-info/
+
+# Data & Models (Exclude large or generated data)
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*.csv
+results/figures/*.png
+results/metrics/*.csv
+results/shap/*
+
+# Dashboard
+dashboard/node_modules/
+dashboard/dist/
+dashboard/.env
+dashboard/package-lock.json
+
+# Presentation & Docs
+ppt/*.pptx
+*.log
+*.pdf
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
