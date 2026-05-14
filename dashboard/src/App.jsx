@@ -116,32 +116,25 @@ function App() {
     let rank = 0;
     let reasons = [];
 
-    // 1. Base Risk (Strictly by RUL)
-    if (rul > 80) rank = 0;
-    else if (rul > 60) rank = 1;
-    else if (rul > 40) rank = 2;
-    else rank = 3;
+    // 1. Base Risk (Strictly by Relative RUL)
+    if (rul > 70) rank = 0;      // LOW
+    else if (rul > 40) rank = 1; // MODERATE
+    else if (rul > 20) rank = 2; // HIGH
+    else rank = 3;               // CRITICAL
 
-    // 2. Penalty Conditions (+1 rank per condition)
+    // 2. Monitoring Observations (Insight only, does not affect rank)
     if (env.includes('High Temperature')) {
-      rank += 1;
       reasons.push("High Temperature Operating Environment (고온 운영 환경)");
     }
     if (impGrowth > 5) {
-      rank += 1;
       reasons.push("Significant Impedance Growth (>5%) (임피던스 급증)");
     }
-    if (Math.abs(velocity) > 1.5) {
-      rank += 1;
+    if (Math.abs(velocity) > 1.2) {
       reasons.push("Accelerated Degradation Velocity (열화 속도 가속)");
     }
-    if (benchmarkDiff < -15) {
-      rank += 1;
-      reasons.push("Poor Fleet Benchmark Performance (동일 환경 대비 성능 저하)");
+    if (benchmarkDiff < -10) {
+      reasons.push("Fleet Benchmark Variance Detected (동일 환경 대비 편차)");
     }
-
-    // Cap rank at 3 (CRITICAL)
-    rank = Math.min(rank, 3);
 
     const levels = [
       { level: 'LOW', color: '#10b981', priority: 'LOW', timing: 'Routine Check', label: '안정 상태' },
