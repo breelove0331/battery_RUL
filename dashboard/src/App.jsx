@@ -79,20 +79,20 @@ function App() {
     return Object.fromEntries(Object.entries(cycleMap).map(([c, v]) => [c, v.reduce((a, b) => a + b, 0) / v.length]))
   }, [])
 
-  // 환경 변경 시 목록만 업데이트되고, 배터리 ID는 사용자가 직접 선택하도록 유지 (강제 리셋 제거)
-  // 단, 초기 진입 시나 데이터가 없는 경우를 위해 최소한의 안전 장치만 유지
+  // 환경 변경 시 해당 환경의 첫 번째 배터리로 자동 전환
   useEffect(() => {
-    if (!selectedId && ENV_MAP[selectedEnv]) {
-      setSelectedId(ENV_MAP[selectedEnv][0])
+    if (ENV_MAP[selectedEnv]) {
+      const validIds = ENV_MAP[selectedEnv]
+      if (!validIds.includes(selectedId)) {
+        setSelectedId(validIds[0])
+      }
     }
   }, [selectedEnv, selectedId])
 
-  // 배터리 변경 시 해당 배터리의 시작 사이클로 자동 이동 (필요한 경우)
+  // 배터리(ID) 변경 시 사이클을 해당 배터리의 시작 시점으로 초기화
   useEffect(() => {
-    if (currentCycle < minCycle || currentCycle > maxCycle) {
-      setCurrentCycle(minCycle)
-    }
-  }, [selectedId, minCycle, maxCycle, currentCycle])
+    setCurrentCycle(minCycle)
+  }, [selectedId, minCycle])
 
   useEffect(() => {
     const battery = [...batteryHistory].reverse().find(b => b.cycle <= currentCycle) || batteryHistory[0]
